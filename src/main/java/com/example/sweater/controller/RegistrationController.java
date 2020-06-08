@@ -1,4 +1,4 @@
-package controller;
+package com.example.sweater.controller;
 
 import com.example.sweater.domain.Role;
 import com.example.sweater.domain.User;
