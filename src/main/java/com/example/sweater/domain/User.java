@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -19,9 +20,7 @@ public class User implements UserDetails {
     private  String username;
     @NotBlank(message = "Password cannot be empty")
     private  String password;
-    @Transient
-    @NotBlank(message = "Password confirmation cannot be empty")
-    private  String password2;
+
     private  boolean active;
 
     @Email(message = "email is not correct")
@@ -34,6 +33,23 @@ public class User implements UserDetails {
     @CollectionTable (name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Message> messages;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
+    }
 
     public boolean isAdmin (){
         return roles.contains(Role.ADMIN);
@@ -120,11 +136,11 @@ public class User implements UserDetails {
         this.activationCode = activationCode;
     }
 
-    public String getPassword2() {
-        return password2;
+    public Set<Message> getMessages() {
+        return messages;
     }
 
-    public void setPassword2(String password2) {
-        this.password2 = password2;
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
     }
 }
