@@ -1,4 +1,3 @@
-
 <#macro pager url page>
 
     <#if page.getTotalPages() gt 7>
@@ -17,10 +16,11 @@
         <#assign body = 1..page.getTotalPages()>
     </#if>
     <div class="mt-3">
-        <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Pages</a>
-            </li>
+        <div class="row">
+            <ul class="pagination col justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Pages</a>
+                </li>
             <#list body as p>
                 <#if (p - 1) == page.getNumber()>
                     <li class="page-item active">
@@ -36,12 +36,12 @@
                     </li>
                 </#if>
             </#list>
-        </ul>
+            </ul>
 
-        <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Number of elements on the page</a>
-            </li>
+            <ul class="pagination col justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Number of elements on the page</a>
+                </li>
             <#list [5, 10, 25, 50] as c>
                 <#if c == page.getSize()>
                     <li class="page-item active">
@@ -53,6 +53,7 @@
                     </li>
                 </#if>
             </#list>
-        </ul>
+            </ul>
+        </div>
     </div>
 </#macro>
